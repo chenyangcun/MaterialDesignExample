@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // specify an adapter (see also next example)
-        myDataset = new String[]{"JAVA", "Object C", "C", "C++", "Swift",
+        myDataset = new String[]{"JAVA", "Objective-C", "C", "C++", "Swift",
                 "GO", "JavaScript", "Python", "Ruby", "HTML", "SQL"};
         mAdapter = new MyAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
