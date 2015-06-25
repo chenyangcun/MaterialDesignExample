@@ -19,6 +19,9 @@
 
 
         <activity android:name=".RecycleViewExampleActivity"></activity>
+        <activity android:name=".EditTextFLExampleActivity"></activity>
+        <activity android:name=".NavigationViewActivity"></activity>
+
     </application>
 
 </manifest>

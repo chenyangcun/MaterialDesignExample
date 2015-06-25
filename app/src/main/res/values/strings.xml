@@ -3,4 +3,15 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+
+
+    <string name="navigation_item_1">Item1</string>
+    <string name="navigation_item_2">Item2</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
 </resources>

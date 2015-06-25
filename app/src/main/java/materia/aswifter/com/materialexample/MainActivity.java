@@ -45,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // specify an adapter (see also next example)
-        myDataset = new String[]{"Recycle View"};
+        myDataset = new String[]{"Recycle View",
+                "EditText Floating Labels",
+                "Navigation View",
+        };
         mAdapter = new MyAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -65,8 +68,25 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerItemClickListener.OnItemClickListener onItemClickListener = new RecyclerItemClickListener.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            Intent intent = new Intent(MainActivity.this,RecycleViewExampleActivity.class);
-            startActivity(intent);
+            Intent intent = null;
+            switch (position) {
+                case 0:
+                    intent = new Intent(MainActivity.this, RecycleViewExampleActivity.class);
+                    startActivity(intent);
+                    break;
+
+                case 1:
+                    intent = new Intent(MainActivity.this, EditTextFLExampleActivity.class);
+                    startActivity(intent);
+                    break;
+
+                case 2:
+                    intent = new Intent(MainActivity.this, NavigationViewActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+
+
         }
     };
 
