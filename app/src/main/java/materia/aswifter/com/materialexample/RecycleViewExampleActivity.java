@@ -1,7 +1,7 @@
 package materia.aswifter.com.materialexample;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class RecycleViewExampleActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_recycler_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("RecycleViewExample");
         setSupportActionBar(toolbar);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -39,13 +40,12 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, onItemClickListener));
-
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // specify an adapter (see also next example)
-        myDataset = new String[]{"Recycle View"};
+        myDataset = new String[]{"JAVA", "Objective-C", "C", "C++", "Swift",
+                "GO", "JavaScript", "Python", "Ruby", "HTML", "SQL"};
         mAdapter = new MyAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -62,30 +62,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private RecyclerItemClickListener.OnItemClickListener onItemClickListener = new RecyclerItemClickListener.OnItemClickListener() {
-        @Override
-        public void onItemClick(View view, int position) {
-            Intent intent = new Intent(MainActivity.this,RecycleViewExampleActivity.class);
-            startActivity(intent);
-        }
-    };
-
-
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private String[] mDataset;
 
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
         // you provide access to all the views for a data item in a view holder
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             // each data item is just a string in this case
             public TextView mTextView;
-
-            public int position;
 
             public ViewHolder(View v) {
                 super(v);
                 mTextView = (TextView) v.findViewById(R.id.textView);
+                v.setOnClickListener(this);
+            }
+
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, mTextView.getText(), Snackbar.LENGTH_SHORT).show();
             }
         }
 
