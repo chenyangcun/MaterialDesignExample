@@ -3,6 +3,7 @@ package materia.aswifter.com.materialexample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 /**
  * Created by chenyc on 2015/6/25.
@@ -19,7 +20,12 @@ public class EditTextFLExampleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 //        TextInputLayout textInputEmail =(TextInputLayout)findViewById(R.id.textInputEmail);
 //        textInputEmail.setErrorEnabled(true);
 //        textInputEmail.setError("Error Message");
