@@ -1,4 +1,4 @@
-package materia.aswifter.com.materialexample;
+package com.aswifter.material;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

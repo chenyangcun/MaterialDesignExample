@@ -1,67 +1,55 @@
-package materia.aswifter.com.materialexample;
+package com.aswifter.material;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.aswifter.material.example.EditTextFLActivity;
+import com.aswifter.material.example.RecycleViewActivity;
+import com.aswifter.material.widget.DividerItemDecoration;
+import com.aswifter.material.widget.RecyclerItemClickListener;
+
+/**
+ * Created by Chenyc on 15/6/27.
+ */
+public class ExampleFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private String[] myDataset;
     private MyAdapter mAdapter;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_example, null);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+        //RecyclerView
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, onItemClickListener));
-
-
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         // specify an adapter (see also next example)
-        myDataset = new String[]{"Recycle View",
-                "EditText Floating Labels",
-                "Navigation View",
+        myDataset = new String[]{"RecycleView",
+                "TextInputLayout", "CardView", "ToolBars", "TabLayout"
         };
-        mAdapter = new MyAdapter(myDataset);
+        mAdapter = new MyAdapter(getActivity(), myDataset);
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-
-    private void snackbarTest() {
-//        Button button = (Button) findViewById(R.id.button);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "hello world", Snackbar.LENGTH_SHORT).show();
-//            }
-//        });
+        return view;
     }
 
 
@@ -71,17 +59,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = null;
             switch (position) {
                 case 0:
-                    intent = new Intent(MainActivity.this, RecycleViewExampleActivity.class);
+                    intent = new Intent(getActivity(), RecycleViewActivity.class);
                     startActivity(intent);
                     break;
 
                 case 1:
-                    intent = new Intent(MainActivity.this, EditTextFLExampleActivity.class);
-                    startActivity(intent);
-                    break;
-
-                case 2:
-                    intent = new Intent(MainActivity.this, NavigationViewActivity.class);
+                    intent = new Intent(getActivity(), EditTextFLActivity.class);
                     startActivity(intent);
                     break;
             }
@@ -92,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+        private final int mBackground;
         private String[] mDataset;
+        private final TypedValue mTypedValue = new TypedValue();
 
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
@@ -110,23 +95,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Provide a suitable constructor (depends on the kind of dataset)
-        public MyAdapter(String[] myDataset) {
+        public MyAdapter(Context context, String[] myDataset) {
             mDataset = myDataset;
+            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
+            mBackground = mTypedValue.resourceId;
         }
 
-        // Create new views (invoked by the layout manager)
         @Override
         public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                        int viewType) {
             // create a new view
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_view, parent, false);
+            v.setBackgroundResource(mBackground);
             // set the view's size, margins, paddings and layout parameters
             ViewHolder vh = new ViewHolder(v);
             return vh;
         }
 
-        // Replace the contents of a view (invoked by the layout manager)
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             // - get element from your dataset at this position
@@ -142,25 +128,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

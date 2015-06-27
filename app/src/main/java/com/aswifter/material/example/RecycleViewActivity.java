@@ -1,5 +1,6 @@
-package materia.aswifter.com.materialexample;
+package com.aswifter.material.example;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,14 +8,16 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class RecycleViewExampleActivity extends AppCompatActivity {
+import com.aswifter.material.R;
+import com.aswifter.material.widget.DividerItemDecoration;
+
+public class RecycleViewActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -26,7 +29,7 @@ public class RecycleViewExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("RecycleViewExample");
+        toolbar.setTitle(R.string.title_language);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,24 +57,16 @@ public class RecycleViewExampleActivity extends AppCompatActivity {
         // specify an adapter (see also next example)
         myDataset = new String[]{"JAVA", "Objective-C", "C", "C++", "Swift",
                 "GO", "JavaScript", "Python", "Ruby", "HTML", "SQL"};
-        mAdapter = new MyAdapter(myDataset);
+        mAdapter = new MyAdapter(this,myDataset);
         mRecyclerView.setAdapter(mAdapter);
     }
 
 
-    private void snackbarTest() {
-//        Button button = (Button) findViewById(R.id.button);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "hello world", Snackbar.LENGTH_SHORT).show();
-//            }
-//        });
-    }
-
-
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+        private final int mBackground;
         private String[] mDataset;
+
+        private final TypedValue mTypedValue = new TypedValue();
 
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
@@ -88,22 +83,25 @@ public class RecycleViewExampleActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, mTextView.getText(), Snackbar.LENGTH_SHORT).show();
+                String text = "I Love " + mTextView.getText() + ".";
+                Snackbar.make(view, text, Snackbar.LENGTH_SHORT).show();
             }
         }
 
         // Provide a suitable constructor (depends on the kind of dataset)
-        public MyAdapter(String[] myDataset) {
+        public MyAdapter(Context context ,String[] myDataset) {
             mDataset = myDataset;
+            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
+            mBackground = mTypedValue.resourceId;
         }
 
-        // Create new views (invoked by the layout manager)
         @Override
         public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                        int viewType) {
             // create a new view
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_view, parent, false);
+            v.setBackgroundResource(mBackground);
             // set the view's size, margins, paddings and layout parameters
             ViewHolder vh = new ViewHolder(v);
             return vh;
@@ -125,25 +123,4 @@ public class RecycleViewExampleActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

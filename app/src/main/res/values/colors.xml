@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="material_lime_500">#CDDC39</color>
-    <color name="material_lime_700">#AFB42B</color>
-    <color name="material_green_A200">#A5D6A7</color>
+    <color name="primary">#009688</color>
+    <color name="primary_dark">#00796B</color>
+    <color name="primary_light">#B2DFDB</color>
+    <color name="accent">#CDDC39</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
 
-
+    <color name="window_background">#FFF5F5F5</color>
 </resources>

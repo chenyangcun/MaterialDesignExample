@@ -1,4 +1,4 @@
-package materia.aswifter.com.materialexample;
+package com.aswifter.material.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

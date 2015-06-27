@@ -4,13 +4,17 @@
     tools:context=".MainActivity">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_item_1"
-            android:checked="true"
+            android:id="@+id/navigation_item_example"
             android:icon="@drawable/ic_favorite"
-            android:title="@string/navigation_item_1" />
+            android:title="@string/navigation_example" />
         <item
-            android:id="@+id/navigation_item_2"
+            android:id="@+id/navigation_item_blog"
             android:icon="@drawable/ic_favorite"
-            android:title="@string/navigation_item_2" />
+            android:title="@string/navigation_my_blog" />
+
+        <item
+            android:id="@+id/navigation_item_about"
+            android:icon="@drawable/ic_favorite"
+            android:title="@string/navigation_about" />
     </group>
 </menu>

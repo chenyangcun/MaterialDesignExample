@@ -1,4 +1,4 @@
-package materia.aswifter.com.materialexample;
+package com.aswifter.material.widget;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +11,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     GestureDetector mGestureDetector;
@@ -28,11 +28,14 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     @Override public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
         View childView = view.findChildViewUnder(e.getX(), e.getY());
         if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
-            mListener.onItemClick(childView, view.getChildPosition(childView));
-            return true;
+            mListener.onItemClick(childView, view.getChildAdapterPosition(childView));
         }
         return false;
     }
 
     @Override public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) { }
+
+    @Override public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        // do nothing
+    }
 }
