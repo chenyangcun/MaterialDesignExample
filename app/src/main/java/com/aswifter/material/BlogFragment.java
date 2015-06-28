@@ -29,7 +29,6 @@ public class BlogFragment extends BackHandledFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override

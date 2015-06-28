@@ -23,4 +23,15 @@
     <string name="app_description">本APP用来演示Material Design控件的使用</string>
     <string name="app_github_url">github地址：\nhttps://github.com/chenyangcun/MaterialDesignExample</string>
 
+    <string name="title_book">书籍</string>
+
+    <string name="book_title_1">失控</string>
+    <string name="book_description_1">作者: [美] 凯文·凯利 \n副标题: 全人类的最终命运和结局 \n出版年: 2010-12 \n页数: 707 \n定价: 88.00元 </string>
+
+    <string name="book_title_2">黑客与画家</string>
+    <string name="book_description_2">作者: [美] Paul Graham\n副标题: 硅谷创业之父Paul Graham文集\n出版年: 2011-4\n页数: 264\n定价: 49.00元</string>
+
+    <string name="book_title_3">七周七语言</string>
+    <string name="book_description_3">作者: Bruce A.Tate\n副标题: 理解多种编程范型\n出版年: 2012-5-8\n页数: 246\n定价: 59.00元</string>
+
 </resources>

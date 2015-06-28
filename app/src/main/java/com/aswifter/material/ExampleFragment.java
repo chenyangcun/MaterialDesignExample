@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.aswifter.material.example.CardViewActivity;
 import com.aswifter.material.example.EditTextFLActivity;
 import com.aswifter.material.example.RecycleViewActivity;
 import com.aswifter.material.widget.DividerItemDecoration;
@@ -65,6 +66,10 @@ public class ExampleFragment extends Fragment {
 
                 case 1:
                     intent = new Intent(getActivity(), EditTextFLActivity.class);
+                    startActivity(intent);
+                    break;
+                case 2:
+                    intent = new Intent(getActivity(), CardViewActivity.class);
                     startActivity(intent);
                     break;
             }
