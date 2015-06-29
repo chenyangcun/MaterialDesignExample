@@ -17,7 +17,7 @@
 
 <resources>
 
-    <style name="Theme.DesignDemo" parent="BaseAppTheme">
+    <style name="AppTheme" parent="BaseAppTheme">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>

@@ -1,5 +1,6 @@
 package com.aswifter.material.example;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,5 +28,11 @@ public class CardViewActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+
+    public void goDetail(View view){
+        Intent intent = new Intent(this,AppBarDetailActivity.class);
+        startActivity(intent);
     }
 }

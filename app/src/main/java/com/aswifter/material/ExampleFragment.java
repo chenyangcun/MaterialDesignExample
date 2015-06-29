@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.aswifter.material.example.AppBarDetailActivity;
 import com.aswifter.material.example.CardViewActivity;
 import com.aswifter.material.example.EditTextFLActivity;
 import com.aswifter.material.example.RecycleViewActivity;
@@ -46,7 +47,7 @@ public class ExampleFragment extends Fragment {
 
         // specify an adapter (see also next example)
         myDataset = new String[]{"RecycleView",
-                "TextInputLayout", "CardView", "ToolBars", "TabLayout"
+                "TextInputLayout", "CardView", "AppBar & TabLayout"
         };
         mAdapter = new MyAdapter(getActivity(), myDataset);
         mRecyclerView.setAdapter(mAdapter);
@@ -70,6 +71,10 @@ public class ExampleFragment extends Fragment {
                     break;
                 case 2:
                     intent = new Intent(getActivity(), CardViewActivity.class);
+                    startActivity(intent);
+                    break;
+                case 3:
+                    intent = new Intent(getActivity(), AppBarDetailActivity.class);
                     startActivity(intent);
                     break;
             }

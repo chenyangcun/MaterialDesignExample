@@ -23,6 +23,7 @@
         <activity android:name=".example.RecycleViewActivity"></activity>
         <activity android:name=".example.EditTextFLActivity"></activity>
         <activity android:name=".example.CardViewActivity"></activity>
+        <activity android:name=".example.AppBarDetailActivity"></activity>
 
     </application>
 
