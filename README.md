@@ -2,4 +2,3 @@
 
 
 ![](/images/bookdetail.gif)
-![](/images/cardview.png)
