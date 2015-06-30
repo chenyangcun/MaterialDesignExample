@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.aswifter.material.book.BooksFragment;
 import com.aswifter.material.widget.BackHandledFragment;
 
 public class MainActivity extends AppCompatActivity implements BackHandledFragment.BackHandlerInterface {
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements BackHandledFragme
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         setupDrawerContent(mNavigationView);
 
-        switchToExample();
+        switchToBook();
 
         //profile Image
         setUpProfileImage();
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity implements BackHandledFragme
         setUpFAB();
     }
 
+    private void switchToBook() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new BooksFragment()).commit();
+        mToolbar.setTitle(R.string.navigation_book);
+    }
 
     private void switchToExample() {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new ExampleFragment()).commit();
@@ -95,6 +100,10 @@ public class MainActivity extends AppCompatActivity implements BackHandledFragme
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
+
+                            case R.id.navigation_item_book:
+                                switchToBook();
+                                break;
                             case R.id.navigation_item_example:
                                 switchToExample();
                                 break;

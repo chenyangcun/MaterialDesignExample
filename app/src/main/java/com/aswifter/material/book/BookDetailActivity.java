@@ -1,6 +1,5 @@
-package com.aswifter.material.example;
+package com.aswifter.material.book;
 
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -14,19 +13,20 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.aswifter.material.R;
+import com.aswifter.material.example.DetailFragment;
+import com.bumptech.glide.Glide;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
- * Created by Chenyc on 2015/6/29.
+ * Created by Chenyc on 15/7/1.
  */
-public class AppBarDetailActivity extends AppCompatActivity {
+public class BookDetailActivity extends AppCompatActivity {
+
 
     private ViewPager mViewPager;
+    private  Book mBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +42,15 @@ public class AppBarDetailActivity extends AppCompatActivity {
             }
         });
 
-
+        mBook = (Book) getIntent().getSerializableExtra("book");
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("失控");
+        collapsingToolbar.setTitle(mBook.getTitle());
 
-        ImageView ivImage = (ImageView)findViewById(R.id.ivImage);
-        ivImage.setImageResource(R.drawable.book1);
+        ImageView ivImage = (ImageView) findViewById(R.id.ivImage);
+        Glide.with(ivImage.getContext())
+                .load(mBook.getImages().getLarge())
+                .fitCenter()
+                .into(ivImage);
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(mViewPager);
@@ -61,22 +64,12 @@ public class AppBarDetailActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager mViewPager) {
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(DetailFragment.newInstance(getAsset("book_content.txt")), "内容简介");
-        adapter.addFragment(DetailFragment.newInstance(getAsset("book_author.txt")), "作者简介");
-        adapter.addFragment(DetailFragment.newInstance(getAsset("book_menu.txt")), "目录");
+        adapter.addFragment(DetailFragment.newInstance(mBook.getSummary()), "内容简介");
+        adapter.addFragment(DetailFragment.newInstance(mBook.getAuthor_intro()), "作者简介");
+        adapter.addFragment(DetailFragment.newInstance(mBook.getCatalog()), "目录");
         mViewPager.setAdapter(adapter);
     }
 
-    private String getAsset(String fileName) {
-        AssetManager am = getResources().getAssets();
-        InputStream is = null;
-        try {
-            is = am.open(fileName, AssetManager.ACCESS_BUFFER);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new Scanner(is).useDelimiter("\\Z").next();
-    }
 
 
     static class MyPagerAdapter extends FragmentPagerAdapter {
@@ -107,4 +100,5 @@ public class AppBarDetailActivity extends AppCompatActivity {
             return mFragmentTitles.get(position);
         }
     }
+
 }

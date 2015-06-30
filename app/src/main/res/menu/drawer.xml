@@ -4,6 +4,10 @@
     tools:context=".MainActivity">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/navigation_item_book"
+            android:icon="@drawable/ic_favorite"
+            android:title="@string/navigation_book" />
+        <item
             android:id="@+id/navigation_item_example"
             android:icon="@drawable/ic_favorite"
             android:title="@string/navigation_example" />
