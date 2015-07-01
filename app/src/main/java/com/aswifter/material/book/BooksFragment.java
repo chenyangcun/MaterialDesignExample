@@ -53,7 +53,7 @@ public class BooksFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        doSearch("Android");
+        doSearch(getString(R.string.default_search_keyword));
     }
 
 

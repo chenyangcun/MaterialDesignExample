@@ -38,5 +38,6 @@
     <string name="search">搜索</string>
     <string name="input_hint">请输入关键字</string>
     <string name="input_prefill"></string>
+    <string name="default_search_keyword">花千骨</string>
 
 </resources>
