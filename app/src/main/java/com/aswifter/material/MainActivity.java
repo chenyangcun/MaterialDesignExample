@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements BackHandledFragme
         //profile Image
         setUpProfileImage();
 
-        //FAB button
-        setUpFAB();
     }
 
     private void switchToBook() {
@@ -78,17 +76,6 @@ public class MainActivity extends AppCompatActivity implements BackHandledFragme
                 switchToBlog();
                 mDrawerLayout.closeDrawers();
                 mNavigationView.getMenu().getItem(1).setChecked(true);
-            }
-        });
-    }
-
-
-    private void setUpFAB() {
-        FloatingActionButton button = (FloatingActionButton) findViewById(R.id.fab_normal);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "This is a SnakeBar", Snackbar.LENGTH_SHORT).show();
             }
         });
     }

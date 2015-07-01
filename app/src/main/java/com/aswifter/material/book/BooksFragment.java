@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.aswifter.material.R;
 import com.aswifter.material.widget.RecyclerItemClickListener;
 import com.bumptech.glide.Glide;
@@ -42,20 +45,48 @@ public class BooksFragment extends Fragment {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
-
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        setUpFAB(view);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Book.searchBooks("android", new Book.IBookResponse<List<Book>>() {
+        doSearch("Android");
+    }
+
+
+    private void doSearch(String keyword) {
+        mProgressBar.setVisibility(View.VISIBLE);
+        Book.searchBooks(keyword, new Book.IBookResponse<List<Book>>() {
             @Override
             public void onData(List<Book> books) {
                 mAdapter = new MyAdapter(getActivity(), books);
                 mRecyclerView.setAdapter(mAdapter);
                 mProgressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+
+    private void setUpFAB(View view) {
+        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_normal);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialDialog.Builder(getActivity())
+                        .title(R.string.search)
+                                //.inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                        .input(R.string.input_hint, R.string.input_prefill, new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(MaterialDialog dialog, CharSequence input) {
+                                // Do something
+                                if (!TextUtils.isEmpty(input)) {
+                                    doSearch(input.toString());
+                                }
+                            }
+                        }).show();
             }
         });
     }

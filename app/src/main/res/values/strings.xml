@@ -35,4 +35,8 @@
     <string name="book_title_3">七周七语言</string>
     <string name="book_description_3">作者: Bruce A.Tate\n副标题: 理解多种编程范型\n出版年: 2012-5-8\n页数: 246\n定价: 59.00元</string>
 
+    <string name="search">搜索</string>
+    <string name="input_hint">请输入关键字</string>
+    <string name="input_prefill"></string>
+
 </resources>
