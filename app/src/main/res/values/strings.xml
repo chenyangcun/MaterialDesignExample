@@ -11,9 +11,9 @@
     <string name="button_login">登 陆</string>
 
 
-    <string name="navigation_book">Material例子</string>
-    <string name="navigation_example">Material控件</string>
-    <string name="navigation_my_blog">我的博客</string>
+    <string name="navigation_book">例子</string>
+    <string name="navigation_example">控件</string>
+    <string name="navigation_my_blog">博客</string>
     <string name="navigation_about">关于</string>
 
 
