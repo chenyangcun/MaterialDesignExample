@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,15 +16,19 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aswifter.material.R;
+import com.aswifter.material.Utils;
 import com.aswifter.material.widget.RecyclerItemClickListener;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +39,9 @@ public class BooksFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
     private ProgressBar mProgressBar;
+    private FloatingActionButton mFabButton;
+
+    private static final int ANIM_DURATION_FAB = 400;
 
     @Nullable
     @Override
@@ -46,6 +55,10 @@ public class BooksFragment extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
+        mAdapter = new MyAdapter(getActivity());
+        mRecyclerView.setAdapter(mAdapter);
+
         setUpFAB(view);
         return view;
     }
@@ -53,26 +66,28 @@ public class BooksFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mFabButton.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
         doSearch(getString(R.string.default_search_keyword));
     }
 
 
     private void doSearch(String keyword) {
         mProgressBar.setVisibility(View.VISIBLE);
+        mAdapter.clearItems();
         Book.searchBooks(keyword, new Book.IBookResponse<List<Book>>() {
             @Override
             public void onData(List<Book> books) {
-                mAdapter = new MyAdapter(getActivity(), books);
-                mRecyclerView.setAdapter(mAdapter);
                 mProgressBar.setVisibility(View.GONE);
+                startFABAnimation();
+                mAdapter.updateItems(books, true);
             }
         });
     }
 
 
     private void setUpFAB(View view) {
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.fab_normal);
-        button.setOnClickListener(new View.OnClickListener() {
+        mFabButton = (FloatingActionButton) view.findViewById(R.id.fab_normal);
+        mFabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new MaterialDialog.Builder(getActivity())
@@ -92,26 +107,49 @@ public class BooksFragment extends Fragment {
     }
 
 
+    private void startFABAnimation() {
+        mFabButton.animate()
+                .translationY(0)
+                .setInterpolator(new OvershootInterpolator(1.f))
+                .setStartDelay(500)
+                .setDuration(ANIM_DURATION_FAB)
+                .start();
+    }
+
+
     private RecyclerItemClickListener.OnItemClickListener onItemClickListener = new RecyclerItemClickListener.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-
             Book book = mAdapter.getBook(position);
             Intent intent = new Intent(getActivity(), BookDetailActivity.class);
             intent.putExtra("book", book);
-            startActivity(intent);
+
+            ActivityOptionsCompat options =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                            view.findViewById(R.id.ivBook), getString(R.string.transition_book_img));
+
+            ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
 
         }
     };
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private final int mBackground;
-        private List<Book> mBooks;
+        private List<Book> mBooks = new ArrayList<Book>();
         private final TypedValue mTypedValue = new TypedValue();
 
-        // Provide a reference to the views for each data item
-        // Complex data items may need more than one view per item, and
-        // you provide access to all the views for a data item in a view holder
+        private static final int ANIMATED_ITEMS_COUNT = 4;
+
+        private boolean animateItems = false;
+        private int lastAnimatedPosition = -1;
+
+        // Provide a suitable constructor (depends on the kind of dataset)
+        public MyAdapter(Context context) {
+            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
+            mBackground = mTypedValue.resourceId;
+        }
+
+
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
             public ImageView ivBook;
@@ -129,12 +167,36 @@ public class BooksFragment extends Fragment {
         }
 
 
-        // Provide a suitable constructor (depends on the kind of dataset)
-        public MyAdapter(Context context, List<Book> books) {
-            mBooks = books;
-            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-            mBackground = mTypedValue.resourceId;
+        private void runEnterAnimation(View view, int position) {
+            if (!animateItems || position >= ANIMATED_ITEMS_COUNT - 1) {
+                return;
+            }
+
+            if (position > lastAnimatedPosition) {
+                lastAnimatedPosition = position;
+                view.setTranslationY(Utils.getScreenHeight(getActivity()));
+                view.animate()
+                        .translationY(0)
+                        .setStartDelay(100 * position)
+                        .setInterpolator(new DecelerateInterpolator(3.f))
+                        .setDuration(700)
+                        .start();
+            }
         }
+
+
+        public void updateItems(List<Book> books, boolean animated) {
+            animateItems = animated;
+            lastAnimatedPosition = -1;
+            mBooks.addAll(books);
+            notifyDataSetChanged();
+        }
+
+        public void clearItems() {
+            mBooks.clear();
+            notifyDataSetChanged();
+        }
+
 
         @Override
         public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
@@ -150,6 +212,7 @@ public class BooksFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
+            runEnterAnimation(holder.itemView, position);
             Book book = mBooks.get(position);
             holder.tvTitle.setText(book.getTitle());
             String desc = "作者: " + book.getAuthor()[0] + "\n副标题: " + book.getSubtitle()

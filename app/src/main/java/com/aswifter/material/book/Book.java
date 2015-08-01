@@ -216,7 +216,7 @@ public class Book implements Serializable {
     }
 
     private static AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-    ;
+
     private static final String BASE_URL = "https://api.douban.com/v2/";
 
     private static String getAbsoluteUrl(String relativeUrl) {

@@ -103,8 +103,8 @@
     <orderEntry type="library" exported="" name="recyclerview-v7-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.0" level="project" />
-    <orderEntry type="library" exported="" name="android-async-http-1.4.7" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
+    <orderEntry type="library" exported="" name="android-async-http-1.4.7" level="project" />
     <orderEntry type="library" exported="" name="material-dialogs-0.7.6.0" level="project" />
   </component>
 </module>

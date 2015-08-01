@@ -18,6 +18,7 @@
 
         <ImageView
             android:id="@+id/ivBook"
+            android:transitionName="@string/transition_book_img"
             android:layout_width="109dp"
             android:layout_height="135dp"
             android:src="@drawable/book1" />

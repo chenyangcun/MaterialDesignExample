@@ -17,10 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginBottom="@dimen/btn_fab_margins"
+        android:layout_marginRight="@dimen/btn_fab_margins"
         android:src="@drawable/ic_find_in_page_white"
-        app:fabSize="normal" />
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp" />
 
 
     <ProgressBar

@@ -62,6 +62,7 @@ public class BookDetailActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
     }
 
+
     private void setupViewPager(ViewPager mViewPager) {
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(DetailFragment.newInstance(mBook.getSummary()), "内容简介");
@@ -69,7 +70,6 @@ public class BookDetailActivity extends AppCompatActivity {
         adapter.addFragment(DetailFragment.newInstance(mBook.getCatalog()), "目录");
         mViewPager.setAdapter(adapter);
     }
-
 
 
     static class MyPagerAdapter extends FragmentPagerAdapter {

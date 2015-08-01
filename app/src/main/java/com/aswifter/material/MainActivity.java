@@ -1,9 +1,7 @@
 package com.aswifter.material;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements BackHandledFragme
     private BackHandledFragment selectedFragment;
     private NavigationView mNavigationView;
 
+    private static final int ANIM_DURATION_TOOLBAR = 300;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +40,14 @@ public class MainActivity extends AppCompatActivity implements BackHandledFragme
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         setupDrawerContent(mNavigationView);
 
-        switchToBook();
-
         //profile Image
         setUpProfileImage();
 
+
+        switchToBook();
+
     }
+
 
     private void switchToBook() {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new BooksFragment()).commit();

@@ -1,7 +1,6 @@
 <resources>
 
 
-    <style name="AppTheme" parent="BaseAppTheme" />
     <!-- Base application theme. -->
     <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -10,6 +9,10 @@
         <item name="colorAccent">@color/accent</item>
         <item name="android:windowBackground">@color/window_background</item>
     </style>
+
+    <style name="AppTheme" parent="BaseAppTheme" />
+
+    <style name="DrawerLayoutTheme" parent="AppTheme"></style>
 
 
     <style name="CardView.Content" parent="android:Widget">
