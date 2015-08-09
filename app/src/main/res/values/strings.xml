@@ -40,4 +40,7 @@
     <string name="input_prefill"></string>
     <string name="default_search_keyword">花千骨</string>
 
+    <string name="title_buttom_tab">Buttom Tab</string>
+
+
 </resources>

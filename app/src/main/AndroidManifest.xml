@@ -21,15 +21,17 @@
         </activity>
 
 
-        <activity android:name=".example.RecycleViewActivity"></activity>
-        <activity android:name=".example.EditTextFLActivity"></activity>
-        <activity android:name=".example.CardViewActivity"></activity>
+        <activity android:name=".example.RecycleViewActivity"/>
+        <activity android:name=".example.EditTextFLActivity"/>
+        <activity android:name=".example.CardViewActivity"/>
         <activity
             android:name=".example.AppBarDetailActivity"
-            android:theme="@style/DrawerLayoutTheme"></activity>
+            android:theme="@style/DrawerLayoutTheme"/>
         <activity
             android:name=".book.BookDetailActivity"
-            android:theme="@style/DrawerLayoutTheme"></activity>
+            android:theme="@style/DrawerLayoutTheme"/>
+
+        <activity android:name=".example.BottomTabActivity"/>
 
     </application>
 
