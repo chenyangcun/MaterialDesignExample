@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements BackHandledFragme
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open,
                 R.string.drawer_close);
         mDrawerToggle.syncState();
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         setupDrawerContent(mNavigationView);
 
@@ -72,14 +72,19 @@ public class MainActivity extends AppCompatActivity implements BackHandledFragme
 
 
     private void setUpProfileImage() {
-        findViewById(R.id.profile_image).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchToBlog();
-                mDrawerLayout.closeDrawers();
-                mNavigationView.getMenu().getItem(1).setChecked(true);
-            }
-        });
+        View headerView=  mNavigationView.inflateHeaderView(R.layout.navigation_header);
+        View profileView = headerView.findViewById(R.id.profile_image);
+        if (profileView != null) {
+            profileView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switchToBlog();
+                    mDrawerLayout.closeDrawers();
+                    mNavigationView.getMenu().getItem(1).setChecked(true);
+                }
+            });
+        }
+
     }
 
 
