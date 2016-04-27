@@ -27,14 +27,22 @@ import com.aswifter.material.R;
 import com.aswifter.material.Utils;
 import com.aswifter.material.widget.RecyclerItemClickListener;
 import com.bumptech.glide.Glide;
+import com.google.android.agera.BaseObservable;
+import com.google.android.agera.Repositories;
+import com.google.android.agera.Repository;
+import com.google.android.agera.Result;
+import com.google.android.agera.Updatable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 /**
  * Created by Chenyc on 15/7/1.
  */
-public class BooksFragment extends Fragment {
+public class BooksFragment extends Fragment implements Updatable {
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
@@ -42,6 +50,10 @@ public class BooksFragment extends Fragment {
     private FloatingActionButton mFabButton;
 
     private static final int ANIM_DURATION_FAB = 400;
+    private ExecutorService networkExecutor;
+    private Repository<Result<List<Book>>> booksRepository;
+    private SearchObservable searchObservable;
+    private BooksSupplier booksSupplier;
 
     @Nullable
     @Override
@@ -60,28 +72,74 @@ public class BooksFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         setUpFAB(view);
+
+        setUpRepository();
+
         return view;
+    }
+
+    public class SearchObservable extends BaseObservable {
+
+        public void doSearch(String key) {
+            booksSupplier.setKey(key);
+            dispatchUpdate();
+        }
+
+    }
+
+
+    private void setUpRepository() {
+        // Set up background executor
+        networkExecutor = newSingleThreadExecutor();
+
+        searchObservable = new SearchObservable();
+
+        booksSupplier = new BooksSupplier(getString(R.string.default_search_keyword));
+
+        // Set up books repository
+        booksRepository = Repositories
+                .repositoryWithInitialValue(Result.<List<Book>>absent())
+                .observe(searchObservable)
+                .onUpdatesPerLoop()
+                .goTo(networkExecutor)
+                .thenGetFrom(booksSupplier)
+                .compile();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mFabButton.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
-        doSearch(getString(R.string.default_search_keyword));
+        //doSearch(getString(R.string.default_search_keyword));
     }
 
+
+    @Override
+    public void update() {
+        mProgressBar.setVisibility(View.GONE);
+        startFABAnimation();
+        if (booksRepository.get().isPresent()) {
+            mAdapter.updateItems(booksRepository.get().get(), true);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        booksRepository.addUpdatable(this);
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        booksRepository.removeUpdatable(this);
+    }
 
     private void doSearch(String keyword) {
         mProgressBar.setVisibility(View.VISIBLE);
         mAdapter.clearItems();
-        Book.searchBooks(keyword, new Book.IBookResponse<List<Book>>() {
-            @Override
-            public void onData(List<Book> books) {
-                mProgressBar.setVisibility(View.GONE);
-                startFABAnimation();
-                mAdapter.updateItems(books, true);
-            }
-        });
+        searchObservable.doSearch(keyword);
     }
 
 
@@ -92,7 +150,7 @@ public class BooksFragment extends Fragment {
             public void onClick(View view) {
                 new MaterialDialog.Builder(getActivity())
                         .title(R.string.search)
-                                //.inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                        //.inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
                         .input(R.string.input_hint, R.string.input_prefill, new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
@@ -132,6 +190,7 @@ public class BooksFragment extends Fragment {
 
         }
     };
+
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private final int mBackground;
@@ -215,7 +274,7 @@ public class BooksFragment extends Fragment {
             runEnterAnimation(holder.itemView, position);
             Book book = mBooks.get(position);
             holder.tvTitle.setText(book.getTitle());
-            String desc = "作者: " + book.getAuthor()[0] + "\n副标题: " + book.getSubtitle()
+            String desc = "作者: " + (book.getAuthor().length > 0 ? book.getAuthor()[0] : "") + "\n副标题: " + book.getSubtitle()
                     + "\n出版年: " + book.getPubdate() + "\n页数: " + book.getPages() + "\n定价:" + book.getPrice();
             holder.tvDesc.setText(desc);
             Glide.with(holder.ivBook.getContext())

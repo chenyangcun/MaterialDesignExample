@@ -1,18 +1,7 @@
 package com.aswifter.material.book;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Chenyc on 15/6/30.
@@ -215,47 +204,7 @@ public class Book implements Serializable {
                 '}';
     }
 
-    private static AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
 
-    private static final String BASE_URL = "https://api.douban.com/v2/";
-
-    private static String getAbsoluteUrl(String relativeUrl) {
-        return BASE_URL + relativeUrl;
-    }
-
-
-    public interface IBookResponse<T> {
-        void onData(T data);
-    }
-
-    public static void searchBooks(String name, final IBookResponse<List<Book>> response) {
-        RequestParams params = new RequestParams();
-        params.put("q", name);
-        params.put("start", 0);
-        params.put("end", 50);
-        client.get(getAbsoluteUrl("book/search"), params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                try {
-                    Gson gson = new Gson();
-                    JSONObject json = new JSONObject(new String(responseBody));
-                    JSONArray jaBooks = json.optJSONArray("books");
-                    List<Book> books = gson.fromJson(jaBooks.toString(), new TypeToken<List<Book>>() {
-                    }.getType());
-                    response.onData(books);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
-    }
 
 
 }
