@@ -60,8 +60,8 @@ public class BottomTabActivity extends AppCompatActivity {
             }
         }
 
-        viewPager.setCurrentItem(1);
-
+//        viewPager.setCurrentItem(1);
+        tabLayout.getTabAt(0).getCustomView().setSelected(true);
     }
 
 
