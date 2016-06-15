@@ -1,6 +1,7 @@
 package com.aswifter.material.common;
 
 import com.aswifter.material.book.BookResponse;
+import com.aswifter.material.news.NewsResponse;
 
 import java.util.Map;
 
@@ -16,14 +17,15 @@ import retrofit2.http.QueryMap;
  */
 public class AppClient {
     public interface HttpService{
-        @GET ("book/search")
+        @GET ("https://api.douban.com/v2/book/search")
         Call<BookResponse> getBooks(@QueryMap Map<String, String> options);
+        @GET("news/latest")
+        Call<NewsResponse>getLatestNews();
     }
     public static HttpService httpService;
-    public static final OkHttpClient okHttpClient = new OkHttpClient();
     public static void initAppClient(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.douban.com/v2/")
+                .baseUrl("http://news-at.zhihu.com/api/4/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         httpService = retrofit.create(HttpService.class);

@@ -3,7 +3,7 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="title_language">编程语言</string>
+    <string name="latest_news">最新</string>
 
     <string name="title_login">用户登陆</string>
     <string name="hint_username">用户名</string>

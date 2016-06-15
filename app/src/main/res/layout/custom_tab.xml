@@ -12,7 +12,7 @@
         android:layout_height="25dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/news_title"
         android:layout_marginTop="2dp"
         android:textSize="14sp"
         android:textColor="@color/tab_text"
