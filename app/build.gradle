@@ -39,6 +39,7 @@ dependencies {
     compile 'com.google.android.agera:net:1.0.0-rc2'
     compile 'com.google.android.agera:rvadapter:1.0.0-rc2'
     compile 'com.google.android.agera:content:1.0.0-rc2'
-
-
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
 }

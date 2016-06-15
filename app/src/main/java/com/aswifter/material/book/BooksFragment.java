@@ -24,7 +24,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aswifter.material.R;
-import com.aswifter.material.Utils;
+import com.aswifter.material.common.ThreadPool;
+import com.aswifter.material.common.Utils;
 import com.aswifter.material.widget.RecyclerItemClickListener;
 import com.bumptech.glide.Glide;
 import com.google.android.agera.BaseObservable;
@@ -89,19 +90,14 @@ public class BooksFragment extends Fragment implements Updatable {
 
 
     private void setUpRepository() {
-        // Set up background executor
-        networkExecutor = newSingleThreadExecutor();
-
         searchObservable = new SearchObservable();
-
         booksSupplier = new BooksSupplier(getString(R.string.default_search_keyword));
-
         // Set up books repository
         booksRepository = Repositories
                 .repositoryWithInitialValue(Result.<List<Book>>absent())
                 .observe(searchObservable)
                 .onUpdatesPerLoop()
-                .goTo(networkExecutor)
+                .goTo(ThreadPool.executor)
                 .thenGetFrom(booksSupplier)
                 .compile();
     }
