@@ -4,27 +4,10 @@ import java.util.List;
 
 
 public class NewsResponse{
-
-    private static final String FIELD_TOP_STORIES = "top_stories";
-    private static final String FIELD_STORIES = "stories";
-    private static final String FIELD_DATE = "date";
-
-
-    private List<TopStory> topStories;
     private List<Story> stories;
-    private int date;
-
-
+    private String date;
     public NewsResponse(){
 
-    }
-
-    public void setTopStories(List<TopStory> topStories) {
-        this.topStories = topStories;
-    }
-
-    public List<TopStory> getTopStories() {
-        return topStories;
     }
 
     public void setStories(List<Story> stories) {
@@ -35,11 +18,11 @@ public class NewsResponse{
         return stories;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 

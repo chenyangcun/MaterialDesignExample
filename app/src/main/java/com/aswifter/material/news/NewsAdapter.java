@@ -19,7 +19,7 @@ import java.util.List;
  * Created by erfli on 6/15/16.
  */
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
-    private RecycleViewActivity recycleViewActivity;
+    private Context context;
     private final int mBackground;
     private List<Story> mDataset;
 
@@ -48,8 +48,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public NewsAdapter(RecycleViewActivity recycleViewActivity, Context context, List<Story> myDataset) {
-        this.recycleViewActivity = recycleViewActivity;
+    public NewsAdapter(Context context, List<Story> myDataset) {
         this.mDataset = myDataset;
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         mBackground = mTypedValue.resourceId;
@@ -89,6 +88,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     public void updateData(List<Story> stories) {
         mDataset.clear();
+        mDataset.addAll(stories);
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<Story> stories){
         mDataset.addAll(stories);
         notifyDataSetChanged();
     }

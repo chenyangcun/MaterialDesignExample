@@ -11,4 +11,9 @@
 
     <color name="window_background">#FFF5F5F5</color>
     <color name="tab_bgcolor">#eeeeee</color>
+
+    <color name="google_red">#d62d20</color>
+    <color name="google_blue">#0057e7</color>
+    <color name="google_green">#008744</color>
+    <color name="google_yellow">#ffa700</color>
 </resources>

@@ -10,6 +10,8 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
 /**
@@ -21,6 +23,8 @@ public class AppClient {
         Call<BookResponse> getBooks(@QueryMap Map<String, String> options);
         @GET("news/latest")
         Call<NewsResponse>getLatestNews();
+        @GET("news/before/{path}")
+        Call<NewsResponse>getHistoryNews(@Path("path") String path);
     }
     public static HttpService httpService;
     public static void initAppClient(){

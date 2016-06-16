@@ -1,6 +1,5 @@
 package com.aswifter.material.book;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,33 +11,24 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.aswifter.material.R;
 import com.aswifter.material.common.ThreadPool;
-import com.aswifter.material.common.Utils;
 import com.aswifter.material.widget.RecyclerItemClickListener;
-import com.bumptech.glide.Glide;
 import com.google.android.agera.BaseObservable;
 import com.google.android.agera.Repositories;
 import com.google.android.agera.Repository;
 import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-
-import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 /**
  * Created by Chenyc on 15/7/1.
@@ -69,7 +59,7 @@ public class BooksFragment extends Fragment implements Updatable {
 
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        mAdapter = new MyAdapter(getActivity());
+        mAdapter = new MyAdapter(this, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         setUpFAB(view);
@@ -188,106 +178,4 @@ public class BooksFragment extends Fragment implements Updatable {
     };
 
 
-    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-        private final int mBackground;
-        private List<Book> mBooks = new ArrayList<Book>();
-        private final TypedValue mTypedValue = new TypedValue();
-
-        private static final int ANIMATED_ITEMS_COUNT = 4;
-
-        private boolean animateItems = false;
-        private int lastAnimatedPosition = -1;
-
-        // Provide a suitable constructor (depends on the kind of dataset)
-        public MyAdapter(Context context) {
-            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-            mBackground = mTypedValue.resourceId;
-        }
-
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            // each data item is just a string in this case
-            public ImageView ivBook;
-            public TextView tvTitle;
-            public TextView tvDesc;
-
-            public int position;
-
-            public ViewHolder(View v) {
-                super(v);
-                ivBook = (ImageView) v.findViewById(R.id.ivBook);
-                tvTitle = (TextView) v.findViewById(R.id.tvTitle);
-                tvDesc = (TextView) v.findViewById(R.id.tvDesc);
-            }
-        }
-
-
-        private void runEnterAnimation(View view, int position) {
-            if (!animateItems || position >= ANIMATED_ITEMS_COUNT - 1) {
-                return;
-            }
-
-            if (position > lastAnimatedPosition) {
-                lastAnimatedPosition = position;
-                view.setTranslationY(Utils.getScreenHeight(getActivity()));
-                view.animate()
-                        .translationY(0)
-                        .setStartDelay(100 * position)
-                        .setInterpolator(new DecelerateInterpolator(3.f))
-                        .setDuration(700)
-                        .start();
-            }
-        }
-
-
-        public void updateItems(List<Book> books, boolean animated) {
-            animateItems = animated;
-            lastAnimatedPosition = -1;
-            mBooks.addAll(books);
-            notifyDataSetChanged();
-        }
-
-        public void clearItems() {
-            mBooks.clear();
-            notifyDataSetChanged();
-        }
-
-
-        @Override
-        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType) {
-            // create a new view
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.book_item, parent, false);
-            //v.setBackgroundResource(mBackground);
-            // set the view's size, margins, paddings and layout parameters
-            ViewHolder vh = new ViewHolder(v);
-            return vh;
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            runEnterAnimation(holder.itemView, position);
-            Book book = mBooks.get(position);
-            holder.tvTitle.setText(book.getTitle());
-            String desc = "作者: " + (book.getAuthor().length > 0 ? book.getAuthor()[0] : "") + "\n副标题: " + book.getSubtitle()
-                    + "\n出版年: " + book.getPubdate() + "\n页数: " + book.getPages() + "\n定价:" + book.getPrice();
-            holder.tvDesc.setText(desc);
-            Glide.with(holder.ivBook.getContext())
-                    .load(book.getImage())
-                    .fitCenter()
-                    .into(holder.ivBook);
-        }
-
-        // Return the size of your dataset (invoked by the layout manager)
-        @Override
-        public int getItemCount() {
-            return mBooks.size();
-        }
-
-
-        public Book getBook(int pos) {
-            return mBooks.get(pos);
-        }
-    }
 }
