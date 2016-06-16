@@ -1,7 +1,11 @@
 package com.aswifter.material.news;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +17,7 @@ import com.aswifter.material.R;
 import com.aswifter.material.common.ThreadPool;
 import com.aswifter.material.widget.DividerItemDecoration;
 import com.aswifter.material.widget.PullToRefreshLayout;
+import com.aswifter.material.widget.RecyclerItemClickListener;
 import com.aswifter.material.widget.RefreshLayout;
 import com.google.android.agera.Receiver;
 import com.google.android.agera.Repositories;
@@ -116,6 +121,18 @@ public class NewsListActivity extends AppCompatActivity implements Updatable {
         myDataset = new ArrayList<>();
         mAdapter = new NewsAdapter(this, myDataset);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(NewsListActivity.this,NewsDetailActivity.class);
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(NewsListActivity.this,
+                                view.findViewById(R.id.news_image), getString(R.string.transition_news_img));
+                String id = String.valueOf(repository.get().get().get(position).getId());
+                intent.putExtra(NewsDetailActivity.NEWSKEY, id);
+                ActivityCompat.startActivity(NewsListActivity.this,intent, options.toBundle());
+            }
+        }));
         getLatestData();
     }
 

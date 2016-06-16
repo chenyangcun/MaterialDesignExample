@@ -28,7 +28,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         // each data item is just a string in this case
         public TextView newsTitleTV;
         public ImageView newsIV;
@@ -37,13 +37,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             super(v);
             newsTitleTV = (TextView) v.findViewById(R.id.news_title);
             newsIV = (ImageView) v.findViewById(R.id.news_image);
-            v.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            String text = "I Love " + newsTitleTV.getText() + ".";
-            Snackbar.make(view, text, Snackbar.LENGTH_SHORT).show();
         }
     }
 

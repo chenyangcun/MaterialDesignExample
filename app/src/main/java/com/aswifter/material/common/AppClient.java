@@ -1,6 +1,7 @@
 package com.aswifter.material.common;
 
 import com.aswifter.material.book.BookResponse;
+import com.aswifter.material.news.NewsDetailResponse;
 import com.aswifter.material.news.NewsResponse;
 
 import java.util.Map;
@@ -25,6 +26,8 @@ public class AppClient {
         Call<NewsResponse>getLatestNews();
         @GET("news/before/{path}")
         Call<NewsResponse>getHistoryNews(@Path("path") String path);
+        @GET("news/{key}")
+        Call<NewsDetailResponse>getNewsDetail(@Path("key")String key);
     }
     public static HttpService httpService;
     public static void initAppClient(){

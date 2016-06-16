@@ -100,7 +100,7 @@ public class PullToRefreshLayout extends ViewGroup implements NestedScrollingPar
     protected OnRefreshListener mListener;
     private boolean mRefreshing = false;
     private int mTouchSlop;
-    private float mTotalDragDistance = -1;
+    protected float mTotalDragDistance = -1;
 
     // If nested scrolling is enabled, the total amount that needed to be
     // consumed by this as the nested scrolling parent is used in place of the

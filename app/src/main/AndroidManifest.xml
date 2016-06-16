@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.aswifter.material.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/DrawerLayoutTheme">
             <intent-filter>
@@ -20,20 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <activity android:name=".news.NewsListActivity"/>
-        <activity android:name=".example.EditTextFLActivity"/>
-        <activity android:name=".example.CardViewActivity"/>
+        <activity android:name=".news.NewsListActivity" />
+        <activity android:name=".example.EditTextFLActivity" />
+        <activity android:name=".example.CardViewActivity" />
         <activity
             android:name=".example.AppBarDetailActivity"
-            android:theme="@style/DrawerLayoutTheme"/>
+            android:theme="@style/DrawerLayoutTheme" />
         <activity
             android:name=".book.BookDetailActivity"
-            android:theme="@style/DrawerLayoutTheme"/>
-
-        <activity android:name=".example.BottomTabActivity"/>
-
+            android:theme="@style/DrawerLayoutTheme" />
+        <activity android:name=".example.BottomTabActivity" />
+        <activity android:name=".news.NewsDetailActivity"></activity>
     </application>
 
 </manifest>

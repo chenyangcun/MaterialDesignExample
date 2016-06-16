@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="transition_book_img">transition_book_img</string>
+    <string name="transition_news_img">transition_news_img</string>
 
 </resources>

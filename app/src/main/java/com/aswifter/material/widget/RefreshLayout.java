@@ -83,9 +83,10 @@ public class RefreshLayout extends PullToRefreshLayout {
                     mIsBeingDragged = true;
                     if(!isLoading){
                         isLoading = true;
-//                        setProgressViewOffset(true,getBottom() - mCircleView.getHeight(),getBottom());
+                        setProgressViewOffset(true, getBottom() - mCircleView.getHeight(), (int)(getBottom() - mCircleView.getHeight() - mTotalDragDistance));
                     }
                     moveSpinner(overscrollTop);
+                    return true;
                 }
                 break;
             }
@@ -131,7 +132,7 @@ public class RefreshLayout extends PullToRefreshLayout {
             super.setRefreshing(refreshing);
         }
         if(!refreshing){
-//            setProgressViewOffset(true,getTop(),(int)(DEFAULT_CIRCLE_TARGET * DisplayUtil.SCREEN_DENSITY));
+            setProgressViewOffset(true,-mCircleView.getHeight(), DEFAULT_CIRCLE_TARGET);
         }
     }
 
