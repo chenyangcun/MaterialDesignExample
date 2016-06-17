@@ -14,6 +14,7 @@ import com.aswifter.material.R;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by erfli on 6/15/16.
@@ -77,6 +78,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    public Story getItem(int position){
+        return mDataset.get(position);
     }
 
     public void updateData(List<Story> stories) {

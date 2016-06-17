@@ -125,7 +125,7 @@ public class NewsListActivity extends AppCompatActivity implements Updatable {
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(NewsListActivity.this,
                                 view.findViewById(R.id.news_image), getString(R.string.transition_news_img));
-                intent.putExtra(NewsDetailActivity.NEWS, repository.get().get().get(position));
+                intent.putExtra(NewsDetailActivity.NEWS, mAdapter.getItem(position));
                 ActivityCompat.startActivity(NewsListActivity.this,intent, options.toBundle());
             }
         }));
