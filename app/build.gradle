@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'android-apt'
 android {
     compileSdkVersion 23
     buildToolsVersion = "23.0.3"
@@ -36,11 +37,15 @@ dependencies {
         transitive = true
     }
     compile project(':agera')
-//    compile 'com.google.android.agera:agera:1.0.0-rc2'
-//    compile 'com.google.android.agera:net:1.0.0-rc2'
-//    compile 'com.google.android.agera:rvadapter:1.0.0-rc2'
-//    compile 'com.google.android.agera:content:1.0.0-rc2'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    //glide transform https://github.com/wasabeef/glide-transformations
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
+    // If you want to use the GPU Filters
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
+
+    //butterknife https://github.com/JakeWharton/butterknife
+    compile 'com.jakewharton:butterknife:8.1.0'
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
 }

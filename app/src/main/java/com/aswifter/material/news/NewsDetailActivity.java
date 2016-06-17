@@ -2,11 +2,11 @@ package com.aswifter.material.news;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,10 +27,12 @@ import java.io.IOException;
 public class NewsDetailActivity extends BaseActivity implements Updatable{
     private WebView webView;
     private ImageView titleImageView;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
     private Toolbar toolbar;
     private Repository<Result<NewsDetailResponse>> repository;
     private NewsDetailSupplier newsDetailSupplier;
-    public static final String NEWSKEY = "news_key";
+    private Story story;
+    public static final String NEWS = "news_key";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,7 @@ public class NewsDetailActivity extends BaseActivity implements Updatable{
 
     @Override
     protected void initView() {
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,6 +61,9 @@ public class NewsDetailActivity extends BaseActivity implements Updatable{
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setDomStorageEnabled(true);
+        webSettings.setTextZoom(200);
+        story = getIntent().getParcelableExtra(NEWS);
+        collapsingToolbarLayout.setTitle(story.getTitle());
     }
 
     @Override
@@ -74,7 +80,7 @@ public class NewsDetailActivity extends BaseActivity implements Updatable{
     @Override
     protected void onResume() {
         super.onResume();
-        newsDetailSupplier.setKey(getIntent().getStringExtra(NEWSKEY));
+        newsDetailSupplier.setKey(String.valueOf(story.getId()));
         repository.addUpdatable(this);
     }
 
@@ -95,12 +101,16 @@ public class NewsDetailActivity extends BaseActivity implements Updatable{
             }).ifSucceededSendTo(new Receiver<NewsDetailResponse>() {
                 @Override
                 public void accept(@NonNull NewsDetailResponse value) {
-                    toolbar.setTitle(value.getTitle());
+                    collapsingToolbarLayout.setTitle(value.getTitle());
                     Glide.with(NewsDetailActivity.this)
-                            .load(value.getImages().get(0))
+                            .load(value.getImage())
                             .asBitmap()
                             .into(titleImageView);
-                    webView.loadData(value.getBody(),"text/html","utf-8");
+                    if(value.getCss() != null && value.getCss().size() > 0){
+                        webView.loadDataWithBaseURL(value.getCss().get(0),value.getBody(),"text/html","utf-8",null);
+                    }else{
+                        webView.loadData(value.getBody(),"text/html","utf-8");
+                    }
                 }
             });
         }

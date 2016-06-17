@@ -2,7 +2,6 @@ package com.aswifter.material.news;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -25,9 +24,7 @@ import com.google.android.agera.Repository;
 import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -128,8 +125,7 @@ public class NewsListActivity extends AppCompatActivity implements Updatable {
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(NewsListActivity.this,
                                 view.findViewById(R.id.news_image), getString(R.string.transition_news_img));
-                String id = String.valueOf(repository.get().get().get(position).getId());
-                intent.putExtra(NewsDetailActivity.NEWSKEY, id);
+                intent.putExtra(NewsDetailActivity.NEWS, repository.get().get().get(position));
                 ActivityCompat.startActivity(NewsListActivity.this,intent, options.toBundle());
             }
         }));

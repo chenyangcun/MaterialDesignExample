@@ -1,9 +1,12 @@
 package com.aswifter.material.news;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 
-public class Story{
+public class Story implements Parcelable{
 
     private static final String FIELD_TYPE = "type";
     private static final String FIELD_ID = "id";
@@ -11,17 +14,31 @@ public class Story{
     private static final String FIELD_IMAGES = "images";
     private static final String FIELD_TITLE = "title";
 
-
     private int type;
     private long id;
     private int gaPrefix;
     private List<String> images;
     private String title;
 
-
-    public Story(){
-
+    protected Story(Parcel in) {
+        type = in.readInt();
+        id = in.readLong();
+        gaPrefix = in.readInt();
+        images = in.createStringArrayList();
+        title = in.readString();
     }
+
+    public static final Creator<Story> CREATOR = new Creator<Story>() {
+        @Override
+        public Story createFromParcel(Parcel in) {
+            return new Story(in);
+        }
+
+        @Override
+        public Story[] newArray(int size) {
+            return new Story[size];
+        }
+    };
 
     public void setType(int type) {
         this.type = type;
@@ -77,4 +94,17 @@ public class Story{
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(type);
+        dest.writeLong(id);
+        dest.writeInt(gaPrefix);
+        dest.writeStringList(images);
+        dest.writeString(title);
+    }
 }
