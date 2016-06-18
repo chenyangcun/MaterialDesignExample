@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -58,13 +57,9 @@ public class NewsDetailActivity extends BaseActivity implements Updatable {
         });
         titleImageView = (ImageView) findViewById(R.id.ivImage);
         webView = (WebView) findViewById(R.id.webView);
-        webView.setInitialScale(1);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLoadWithOverviewMode(true);
         webSettings.setDomStorageEnabled(true);
-        webSettings.setTextZoom(100);
         story = getIntent().getParcelableExtra(NEWS);
         collapsingToolbarLayout.setTitle(story.getTitle());
     }

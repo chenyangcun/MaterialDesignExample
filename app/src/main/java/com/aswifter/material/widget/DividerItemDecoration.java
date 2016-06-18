@@ -51,7 +51,12 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         }
         mOrientation = orientation;
     }
- 
+
+    public DividerItemDecoration setmDivider(Drawable mDivider) {
+        this.mDivider = mDivider;
+        return this;
+    }
+
     @Override
     public void onDraw(Canvas c, RecyclerView parent) {
         if (mOrientation == VERTICAL_LIST) {

@@ -122,10 +122,11 @@ blockquote {
   border-left: 3px solid #D0E5F2;
   font-style: normal;
   display: block;
+  line-height: 1.4em;
   vertical-align: baseline;
   font-size: 100%;
   margin: .5em 0;
-  padding: 0 0 0 1em;
+  padding: 0 0 0 .5em;
 }
 ul,
 ol {
@@ -216,13 +217,8 @@ ol {
 .content img {
   max-width: 100%;
   display: block;
-  margin: 30px auto;
+  margin: 10px 0;
 }
-
-.content img + img {
-  margin-top: 15px;
-}
-
 .content img[src*="zhihu.com/equation"] {
   display: inline-block;
   margin: 0 3px;
@@ -459,26 +455,11 @@ body.night,
   text-decoration: none;
 }
 .highlight {
-  width: auto;
   overflow: auto;
   word-wrap: normal;
-}
-.highlight::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-.highlight code {
-  overflow: auto;
-}
-.highlight::-webkit-scrollbar-thumb:horizontal {
-  border-radius: 6px;
-  background-color: rgba(0,0,0,.5);
-}
-.highlight::-webkit-scrollbar-thumb:horizontal:hover {
-  background-color: rgba(0,0,0,.6);
+  background: #fff;
 }
 .highlight pre {
-  margin: 0;
   white-space: pre;
 }
 .highlight .hll {
@@ -801,121 +782,4 @@ a.origin-source:link .text {
 }
 .night .origin-source.with-link:before {
   border-color: transparent transparent transparent #666;
-}
-/* ==== */
-.question-title {
-  color: #494b4d;
-}
-
-blockquote {
-  color: #9da3a6;
-  border-left: 3px solid #Dfe3e6;
-}
-
-.content a {
-  color: #4786b3;
-}
-
-.content {
-  font-size: 17px;
-  color: #616466;
-}
-
-.content-wrap {
-  background: #fff;
-}
-
-hr {
-  margin: 30px 0;
-  border-top-width: 0;
-}
-
-
-p {
-  margin: 20px 0 !important;
-}
-
-.dudu-night .content {
-  color: #797b80;
-}
-
-.dudu-night hr {
-  color: #27282b;
-  border-color: #27282b;
-}
-.dudu-night .meta .author,
-.dudu-night .meta .bio {
-  color: #555659;
-}
-.dudu-night .headline-title,
-.dudu-night .headline-background .heading-content,
-.dudu-night .question-title {
-  color: #919499;
-}
-
-.dudu-night .headline {
-  border-bottom: none;
-}
-.dudu-night img {
-  -webkit-mask-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0.7)));
-}
-body.dudu-night,
-.dudu-night .content-wrap {
-  background: #1d1e1f;
-}
-.dudu-night .answer + .answer {
-  border-top: 2px solid #27282b;
-}
-.dudu-night .question + .question {
-  border-top: 4px solid #27282b;
-}
-.dudu-night .view-more a {
-  background: #1d1e1f;
-  color: #396280;
-}
-.dudu-night .icon-arrow-right {
-  background-image: url(http://static.daily.zhihu.com/img/share-icons.png);
-  background-repeat: no-repeat;
-  display: inline-block;
-  vertical-align: middle;
-  background-position: -70px -35px;
-  width: 10px;
-  height: 15px;
-}
-.dudu-night blockquote,
-.dudu-night sup {
-  border-left: 3px solid #2e3033;
-  color: #555659;
-}
-.dudu-night .content a {
-  color: #396280;
-}
-
-.dudu-night img {
-  opacity: 0.7;
-}
-
-.dudu-night .from-column {
-  color: #2b82ac;
-  background-image: url(http://static.daily.zhihu.com/img/Dark_News_Column_Entrance.png);
-}
-.dudu-night .from-column:active {
-  background-image: url(http://static.daily.zhihu.com/img/Dark_News_Column_Entrance_Highlight.png);
-}
-
-//禁用头部下面的分隔线
-.dudu .headline {
-  border-bottom: none;
-}
-
-.dudu-night .origin-source,
-.dudu-night a.origin-source:link {
-  background: #222324;
-}
-
-.dudu-night .origin-source.with-link .text {
-  color: #797b80;
-}
-.dudu-night .origin-source.with-link:after {
-  border-color: transparent transparent transparent #797b80;
 }

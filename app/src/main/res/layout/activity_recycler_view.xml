@@ -18,7 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/appbar"
-            android:scrollbars="none" />
+            android:scrollbars="none"
+            android:background="@color/light_grey"
+            />
     </com.aswifter.material.widget.RefreshLayout>
 
 

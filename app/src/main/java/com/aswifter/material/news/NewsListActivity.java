@@ -15,6 +15,7 @@ import android.view.View;
 import com.aswifter.material.R;
 import com.aswifter.material.common.ThreadPool;
 import com.aswifter.material.widget.DividerItemDecoration;
+import com.aswifter.material.widget.DividerOffsetDecoration;
 import com.aswifter.material.widget.PullToRefreshLayout;
 import com.aswifter.material.widget.RecyclerItemClickListener;
 import com.aswifter.material.widget.RefreshLayout;
@@ -62,7 +63,8 @@ public class NewsListActivity extends AppCompatActivity implements Updatable {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST).setmDivider(getResources().getDrawable(R.drawable.md_transparent)));
+        mRecyclerView.addItemDecoration(new DividerOffsetDecoration());
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         initData();
     }
@@ -117,7 +119,6 @@ public class NewsListActivity extends AppCompatActivity implements Updatable {
         };
         myDataset = new ArrayList<>();
         mAdapter = new NewsAdapter(this, myDataset);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
