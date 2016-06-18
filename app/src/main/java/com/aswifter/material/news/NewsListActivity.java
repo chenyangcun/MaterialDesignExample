@@ -117,6 +117,7 @@ public class NewsListActivity extends AppCompatActivity implements Updatable {
         };
         myDataset = new ArrayList<>();
         mAdapter = new NewsAdapter(this, myDataset);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
