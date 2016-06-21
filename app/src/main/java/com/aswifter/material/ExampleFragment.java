@@ -18,7 +18,7 @@ import com.aswifter.material.example.AppBarDetailActivity;
 import com.aswifter.material.example.BottomTabActivity;
 import com.aswifter.material.example.CardViewActivity;
 import com.aswifter.material.example.EditTextFLActivity;
-import com.aswifter.material.example.RecycleViewActivity;
+import com.aswifter.material.news.NewsListActivity;
 import com.aswifter.material.widget.DividerItemDecoration;
 import com.aswifter.material.widget.RecyclerItemClickListener;
 
@@ -62,7 +62,7 @@ public class ExampleFragment extends Fragment {
             Intent intent = null;
             switch (position) {
                 case 0:
-                    intent = new Intent(getActivity(), RecycleViewActivity.class);
+                    intent = new Intent(getActivity(), NewsListActivity.class);
                     startActivity(intent);
                     break;
 
@@ -106,7 +106,7 @@ public class ExampleFragment extends Fragment {
 
             public ViewHolder(View v) {
                 super(v);
-                mTextView = (TextView) v.findViewById(R.id.textView);
+                mTextView = (TextView) v.findViewById(R.id.news_title);
             }
         }
 

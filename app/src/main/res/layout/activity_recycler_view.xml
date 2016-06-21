@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -6,13 +7,21 @@
         android:id="@+id/appbar"
         layout="@layout/include_toolbar" />
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <com.aswifter.material.widget.RefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_below="@+id/appbar"
-        android:scrollbars="none" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appbar"
+            android:scrollbars="none"
+            android:background="@color/light_grey"
+            />
+    </com.aswifter.material.widget.RefreshLayout>
 
 
 </RelativeLayout>

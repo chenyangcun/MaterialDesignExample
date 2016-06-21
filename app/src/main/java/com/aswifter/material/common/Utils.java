@@ -1,4 +1,4 @@
-package com.aswifter.material;
+package com.aswifter.material.common;
 
 import android.content.Context;
 import android.content.res.Resources;
